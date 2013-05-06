@@ -1,0 +1,18 @@
+[gitco-kernel-dom0-centos6-x64]
+name= GITCO [ KERNEL DOM0 ] Repository 
+baseurl=http://www.gitco.de/linux/x86_64/centos/6/kernel-dom0
+gpgcheck=1
+gpgkey=http://www.gitco.de/linux/x86_64/centos/6/GITCO-RPM-KEY
+
+[gitco-xen4.0.1-centos6-x64]
+name= GITCO [ XEN-4.0.1 ] Repository 
+baseurl=http://www.gitco.de/linux/x86_64/centos/6/xen4.0.1
+gpgcheck=1
+gpgkey=http://www.gitco.de/linux/x86_64/centos/6/GITCO-RPM-KEY
+
+[gitco-misc-centos6-x64]
+name= GITCO [ MISC PACKAGES ] Repository 
+baseurl=http://www.gitco.de/linux/x86_64/centos/6/misc
+gpgcheck=1
+gpgkey=http://www.gitco.de/linux/x86_64/centos/6/GITCO-RPM-KEY
+

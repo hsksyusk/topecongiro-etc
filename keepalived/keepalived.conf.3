@@ -1,0 +1,36 @@
+! Configuration File for keepalived
+virtual_server_group example {
+    49.212.173.211 8082
+}
+
+virtual_server group example { 
+    delay_loop 6
+    lb_algo rr
+    lb_kind NAT
+    nat_mask 255.255.254.0
+    persistence_timeout 50
+    protocol TCP
+
+    real_server 49.212.173.211 8080 {
+        weight 1
+        HTTP_GET {
+            url {
+              path /
+              status_code 200
+            }
+            connect_port 8080
+            connect_timeout 3
+        }
+    }
+    real_server 49.212.173.211 8081 {
+        weight 1
+        HTTP_GET {
+            url {
+              path /
+              status_code 200
+            }
+            connect_port 8081
+            connect_timeout 3
+        }
+    }
+}

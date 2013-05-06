@@ -1,0 +1,12 @@
+<network>
+  <name>default</name>
+  <uuid>cfed3c8f-c70d-41f1-a1ba-d901d1411b5c</uuid>
+  <bridge name="virbr0" />
+  <mac address='52:54:00:E2:F7:0'/>
+  <forward/>
+  <ip address="192.168.122.1" netmask="255.255.255.0">
+    <dhcp>
+      <range start="192.168.122.2" end="192.168.122.254" />
+    </dhcp>
+  </ip>
+</network>
