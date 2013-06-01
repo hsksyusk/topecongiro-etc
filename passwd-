@@ -37,3 +37,4 @@ dovecot:x:97:97:Dovecot IMAP server:/usr/libexec/dovecot:/sbin/nologin
 dovenull:x:497:494:Dovecot's unauthorized user:/usr/libexec/dovecot:/sbin/nologin
 named:x:25:25:Named:/var/named:/sbin/nologin
 vmail:x:5000:5000::/home/vmail:/bin/bash
+nginx:x:496:493:Nginx web server:/var/lib/nginx:/sbin/nologin
