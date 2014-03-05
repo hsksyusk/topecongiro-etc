@@ -55,7 +55,6 @@ stapsys:!::
 apache:!::
 mysql:!::
 cacti:!::
-nagios:!::apache
 tmux:!::
 dovecot:!::
 dovenull:!::

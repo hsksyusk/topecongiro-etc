@@ -55,7 +55,6 @@ stapsys:x:157:
 apache:x:48:
 mysql:x:27:
 cacti:x:496:
-nagios:x:502:apache
 tmux:x:495:
 dovecot:x:97:
 dovenull:x:494:
