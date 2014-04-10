@@ -61,3 +61,4 @@ dovenull:x:494:
 named:x:25:
 vmail:x:5000:
 nginx:x:493:
+ircd:x:492:
