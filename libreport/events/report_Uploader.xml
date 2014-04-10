@@ -16,16 +16,17 @@
     <name xml:lang="mr">अपलोडर रिपोर्ट करा</name>
     <name xml:lang="or">ବିବରଣୀ ଧାରଣକାରୀ</name>
     <name xml:lang="pa">ਰਿਪੋਰਟ ਅੱਪਲੋਡਰ</name>
+    <name xml:lang="pl">Program wysyłający zgłoszenie</name>
     <name xml:lang="pt_BR">Upload de Relatório</name>
-    <name xml:lang="ru">Отправитель отчёта</name>
+    <name xml:lang="ru">URL</name>
     <name xml:lang="sv">Rapportskickare</name>
     <name xml:lang="ta">புதுப்பியை அறிக்கையிடவும்</name>
     <name xml:lang="te">అప్‌లోడర్ నివేదించు</name>
-    <name xml:lang="tr">Rapor yükleyici</name>
+    <name xml:lang="uk">Вивантажувач звіту</name>
     <name xml:lang="zh_CN">报告上传程序</name>
     <name xml:lang="zh_TW">報告上傳程式</name>
     <description>Upload as tar.gz file (via FTP/SCP/...)</description>
-    <description xml:lang="as">tar.gz নথিপত্ৰ হিচাপে আপল'ড কৰক (FTP/SCP/ ৰে ...)</description>
+    <description xml:lang="as">tar.gz ফাইল হিচাপে আপল'ড কৰক (FTP/SCP/ ৰে ...)</description>
     <description xml:lang="bn_IN">tar.gz ফাইল রূপে আপলোড করা হবে (FTP/SCP/... মাধ্যমে)</description>
     <description xml:lang="de">Hochladen als tar.gz-Datei (per FTP/SCP/...)</description>
     <description xml:lang="es">Cargue como archivo tar.gz (vía FTP/SCP/...)</description>
@@ -40,10 +41,12 @@
     <description xml:lang="mr">tar.gz फाइल (FTP/SCP/... तर्फे) म्हणून अपलोड करा</description>
     <description xml:lang="or">tar.gz ଫାଇଲ ଭାବରେ ଧାରଣ କରନ୍ତୁ (FTP/SCP/... ମାଧ୍ଯମରେ)</description>
     <description xml:lang="pa">tar.gz ਫਾਇਲ ਤੌਰ ਤੇ ਅੱਪਲੋਡ ਕਰੋ (FTP/SCP/... ਰਾਹੀਂ)</description>
+    <description xml:lang="pl">Wysyła jako plik tar.gz (przez FTP/SCP/...)</description>
     <description xml:lang="pt_BR">Carregar como arquivo tar.gz (via FTP/SCP/...)</description>
     <description xml:lang="ru">Отправить в виде tar.gz (через FTP/SCP/...)</description>
     <description xml:lang="ta">tar.gz கோப்பாக பதிவேற்று (FTP/SCP/ வழியாக...)</description>
     <description xml:lang="te">tar.gz ఫైలు వలె అప్‌లోడ్ చేయండి (FTP/SCP/... ద్వారా)</description>
+    <description xml:lang="uk">Вивантажити як файл tar.gz (за допомогою FTP/SCP/...)</description>
     <description xml:lang="zh_CN">作为 tar.gz 文件上传（使用 FTP/SCP/...）</description>
     <description xml:lang="zh_TW">以 tar.gz 檔案儲存（透過 FTP/SCP/...）</description>
 
@@ -58,7 +61,6 @@
         <option type="text" name="Upload_URL">
             <label>URL</label>
             <label xml:lang="as">URL</label>
-            <label xml:lang="bg">URL</label>
             <label xml:lang="bn_IN">URL</label>
             <label xml:lang="de">URL</label>
             <label xml:lang="es">URL </label>
@@ -73,18 +75,18 @@
             <label xml:lang="mr">URL</label>
             <label xml:lang="or">URL</label>
             <label xml:lang="pa">URL</label>
+            <label xml:lang="pl">Adres URL</label>
             <label xml:lang="pt_BR">URL</label>
             <label xml:lang="ru">URL</label>
             <label xml:lang="sv">URL</label>
             <label xml:lang="ta">URL</label>
             <label xml:lang="te">URL</label>
-            <label xml:lang="tr">URL</label>
+            <label xml:lang="uk">Адреса</label>
             <label xml:lang="zh_CN">URL</label>
             <label xml:lang="zh_TW">URL</label>
             <allow-empty>no</allow-empty>
             <description>Where do you want to upload the tarball with report in form login:password@url</description>
             <description xml:lang="as">লগিন:পাছৱাৰ্ড@url বিন্যাসত থকা সংবাদৰ সৈতে টাৰবলক আপুনি কত আপল'ড কৰিব বিচাৰে</description>
-            <description xml:lang="bg">Къде искате да качите архива с доклада, във формат login:password@url</description>
             <description xml:lang="bn_IN">login:password@url বিন্যাসে রিপোর্টটি tarball রূপে যে স্থানে আপলোড করা হবে</description>
             <description xml:lang="de">Wo möchten Sie den Tarball mit dem Bericht übertragen - in der Form login:password@url</description>
             <description xml:lang="es">¿A dónde desea cargar el tarball con el informe en forma: nombredeusuario:contraseña@url</description>
@@ -98,12 +100,14 @@
             <description xml:lang="ml">ടാര്‍ബോളിനൊപ്പം, login:password@url എന്ന മാതൃകയിലുള്ള റിപ്പോര്‍ട്ട് എവിടെ അപ്ലോഡ് ചെയ്യണം</description>
             <description xml:lang="mr">login:password@url पासूनचे रिपोर्ट तुम्हाला कुठे अपलोड करायचे आहे</description>
             <description xml:lang="or">login:password@url ଆକାରରେ ଥିବା ବିବରଣୀ ଟାରବଲକୁ ଆପଣ କେଉଁଠି ଧାରଣ କରିବାକୁ ଚାହୁଁଛନ୍ତି</description>
-            <description xml:lang="pa">ਜਿੱਥੇ ਤੁਸੀਂ ਟਾਰਬਾਲ ਨੂੰ login:password@url ਦੇ ਰੂਪ ਵਿੱਚ ਅੱਪਲੋਡ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ</description>
+            <description xml:lang="pa">ਤੁਸੀਂ ਟਾਰਬਾਲ ਨੂੰ ਇਤਲਾਹ ਨਾਲ login:password@url ਫਾਰਮ ਵਿੱਚ ਕਿੱਥੇ ਅੱਪਲੋਡ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ</description>
+            <description xml:lang="pl">Gdzie wysłać plik archiwum tar ze zgłoszeniem, w formie login:hasło@url</description>
             <description xml:lang="pt_BR">Onde você quer fazer upload do arquivo tarball com o relatório na forma login:password@url</description>
             <description xml:lang="ru">Отправить *.tar на адрес в формате «имя:пароль@URL»</description>
             <description xml:lang="sv">Vart vill du skicka tar-arkivet med rapporten i formatet inloggning:lösenord@url</description>
             <description xml:lang="ta">நீங்கள் tarball-ஐ எங்கு பதிவேற்ற வேண்டும் login:password@url</description>
             <description xml:lang="te">టార్బాల్‌ను నివేదికతో యెక్కడ అప్‌లోడ్ చేయాలని అనుకొంటున్నారు login:password@url రూపంలో</description>
+            <description xml:lang="uk">Місце, куди ви бажаєте вивантажити архів з даними звіту у форматі користувач:пароль@адреса</description>
             <description xml:lang="zh_CN">您希望向哪里上传报告的 tarball 文件，格式为 login:password@url</description>
             <description xml:lang="zh_TW">您希望將包含了報告的 tarball，以 login:password@url 格式上傳到哪</description>
             <note-html>Examples: ftp://[user[:pass]@]host/dir/[file.tar.gz], scp://[user[:pass]@]host/dir/[file.tar.gz], file:///dir/[file.tar.gz]</note-html>
@@ -122,10 +126,12 @@
             <note-html xml:lang="mr">उदाहरणे: ftp://[user[:pass]@]host/dir/[file.tar.gz], scp://[user[:pass]@]host/dir/[file.tar.gz], file:///dir/[file.tar.gz]</note-html>
             <note-html xml:lang="or">ଉଦାହରଣ: ftp://[user[:pass]@]host/dir/[file.tar.gz], scp://[user[:pass]@]host/dir/[file.tar.gz], file:///dir/[file.tar.gz]</note-html>
             <note-html xml:lang="pa">ਉਦਾਹਰਨ: ftp://[user[:pass]@]host/dir/[file.tar.gz], scp://[user[:pass]@]host/dir/[file.tar.gz], file:///dir/[file.tar.gz]</note-html>
+            <note-html xml:lang="pl">Przykłady: ftp://[użytkownik[:hasło]@]komputer/katalog/[plik.tar.gz], scp://[użytkownik[:hasło]@]komputer/katalog/[plik.tar.gz], file:///katalog/[plik.tar.gz]</note-html>
             <note-html xml:lang="pt_BR">Exemplos: ftp://[user[:pass]@]host/dir/[file.tar.gz], scp://[user[:pass]@]host/dir/[file.tar.gz], file:///dir/[file.tar.gz]</note-html>
             <note-html xml:lang="ru">Примеры: ftp://[user[:pass]@]host/dir/[file.tar.gz], scp://[user[:pass]@]host/dir/[file.tar.gz], file:///dir/[file.tar.gz]</note-html>
             <note-html xml:lang="ta">எடுத்துக்காட்டு: ftp://[user[:pass]@]host/dir/[file.tar.gz], scp://[user[:pass]@]host/dir/[file.tar.gz], file:///dir/[file.tar.gz]</note-html>
             <note-html xml:lang="te">ఉదాహరణలు: ftp://[user[:pass]@]host/dir/[file.tar.gz], scp://[user[:pass]@]host/dir/[file.tar.gz], file:///dir/[file.tar.gz]</note-html>
+            <note-html xml:lang="uk">Приклади: ftp://[користувач[:пароль]@]вузол/каталог/[файл.tar.gz], scp://[користувач[:пароль]@]вузол/каталог/[файл.tar.gz], file:///каталог/[файл.tar.gz]</note-html>
             <note-html xml:lang="zh_CN">例如：ftp://[user[:pass]@]host/dir/[file.tar.gz], scp://[user[:pass]@]host/dir/[file.tar.gz], file:///dir/[file.tar.gz]</note-html>
             <note-html xml:lang="zh_TW">例如：ftp://[user[:pass]@]host/dir/[file.tar.gz], scp://[user[:pass]@]host/dir/[file.tar.gz], file:///dir/[file.tar.gz]</note-html>
             <default-value/>

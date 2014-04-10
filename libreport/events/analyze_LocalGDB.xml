@@ -20,7 +20,7 @@
     <name xml:lang="mr">स्थानीय GNU डिबगर</name>
     <name xml:lang="nl">Lokale GNU debugger</name>
     <name xml:lang="or">ସ୍ଥାନୀୟ GNU ତ୍ରୁଟିନିବାରକ</name>
-    <name xml:lang="pa">ਲੋਕਲ GNU ਡੀਬੱਗਰ</name>
+    <name xml:lang="pa">ਸਥਾਨਕ GNU ਡੀਬੱਗਰ</name>
     <name xml:lang="pl">Lokalny debuger GDB</name>
     <name xml:lang="pt">Depurador GNU local</name>
     <name xml:lang="pt_BR">GNU Debugger Local</name>
@@ -30,7 +30,7 @@
     <name xml:lang="ta">உள்ளிமை GNU பிழைதிருத்தி</name>
     <name xml:lang="te">స్థానిక GNU డీబగ్గర్</name>
     <name xml:lang="uk">Локальний зневаджувач GNU</name>
-    <name xml:lang="zh_CN">本地 GNU 调试程序</name>
+    <name xml:lang="zh_CN">本地 GNU 调试器</name>
     <name xml:lang="zh_TW">本機 GNU 除錯程式</name>
     <description>Download debuginfo packages and generate backtrace locally using GDB</description>
     <description xml:lang="as">GDB ব্যৱহাৰ কৰি debuginfo পেকেইজসমূহ ডাউনলোড কৰক আৰু বেকট্ৰেইচ স্থানীয়ভাৱে সৃজন কৰক</description>
@@ -52,8 +52,9 @@
     <description xml:lang="mr">debuginfo संकुले डाउलनोड करा व GDB चा वापर करून बॅकट्रेस निर्माण करा</description>
     <description xml:lang="nl">Download debuginfo pakketten en genereer de backtrace lokaal met behulp van GDB</description>
     <description xml:lang="or">ତ୍ରୁଟି ନିବାରଣ ସୂଚନାକୁ ଆହରଣ କରନ୍ତୁ ଏବଂ GDB ବ୍ୟବହାର କରି ସ୍ଥାନୀୟ ଭାବରେ ବ୍ୟାକଟ୍ରେସ ସୃଷ୍ଟିକରନ୍ତୁ</description>
-    <description xml:lang="pa">ਡੀਬੱਗ-ਜਾਣਕਾਰੀ ਡਾਊਨਲੋਡ ਕਰੋ ਅਤੇ GDB ਵਰਤ ਕੇ ਬੈਕਟਰੇਸ ਨੂੰ ਲੋਕਲ ਹੀ ਬਣਾਓ</description>
+    <description xml:lang="pa">ਡੀਬੱਗ-ਜਾਣਕਾਰੀ ਪੰਡ ਡਾਊਨਲੋਡ ਕਰੋ ਅਤੇ GDB ਵਰਤ ਕੇ ਸਥਾਨਕ ਤੌਰ ਤੇ ਬੈਕਟਰੇਸ ਬਣਾਓ</description>
     <description xml:lang="pl">Pobiera pakiety debuginfo i tworzy wyjątek lokalnie używając GDB</description>
+    <description xml:lang="pt">Descarregar pacotes debuginfo e gerar backtrace localmente utilizando GDB</description>
     <description xml:lang="pt_BR">Baixar os pacotes debuginfo e gerar o backtrace localmente usando o GDB</description>
     <description xml:lang="ru">Загрузка отладочных пакетов и создание протоколов локально при помощи GDB</description>
     <description xml:lang="sk">Stiahntuť debuginfo balíčky a vytvoriť backtrace lokálne s použitím GDB</description>
@@ -61,7 +62,7 @@
     <description xml:lang="ta">பிழைதிருத்த தகவல் தொகுப்புகளை பதிவிறக்கி GDB ஐ பயன்படுத்தி உள்ளமையாக பேக்ட்ரேஸை துவக்கவும்</description>
     <description xml:lang="te">డీబగ్‌యిన్ఫో ప్యాకేజీలను డౌన్‌లోడ్ చేసి మరియు GDB వుపయోగించి స్థానికంగా బ్యాక్‌ట్రేస్ సృష్టించు</description>
     <description xml:lang="uk">Отримати пакунки debuginfo і створити дані зворотного трасування локально за допомогою GDB</description>
-    <description xml:lang="zh_CN">下载 debuginfo 包并用 GDB 在本地生成回溯数据</description>
+    <description xml:lang="zh_CN">下载调试信息包并用 GDB 在本地生成回溯</description>
     <description xml:lang="zh_TW">下載 debuginfo 套件並透過本機端的 GDB 產生 backtrace 資訊</description>
     <long-description>Needs to downloads debuginfo packages, which might take significant time, and take up disk space. However, unlike RetraceServer, doesn't send coredump to remote machines.</long-description>
     <long-description xml:lang="as">debuginfo পেকেইজসমূহ ডাউনলোড কৰাৰ প্ৰয়োজন, যি বহু সময়, আৰু ডিস্ক স্থান লব পাৰে। যি কি নহওক, ৰিট্ৰেইচচাৰ্ভাৰৰ বিপৰিতে, দূৰৱৰ্তী মেচিনসমূহলে কৌৰডাম্প নপঠায়। </long-description>
@@ -83,7 +84,7 @@
     <long-description xml:lang="mr">debuginfo संकुले डाऊनलोड करतो, ज्यास बराच वेळ लागू शकतो, व डिस्क जागा देखील लागू शकते. तरी, RetraceServer खेरीज, कोरडम्पला रिमोट मशीन्स् करीता पाठवत नाही.</long-description>
     <long-description xml:lang="nl">Debuginfo pakketten moeten gedownload worden, wat veel tijd en schijfruimte zou kunnen kosten. In tegenstelling tot RetraceServer echter, wordt geen coredump naar machines op afstand gestuurd.</long-description>
     <long-description xml:lang="or">ତ୍ରୁଟିନିବାରଣ ପ୍ୟାକେଜଗୁଡ଼ିକୁ ଆହରଣ କରିବା ଆବଶ୍ୟକ, ଯାହାକି ହୁଏତଃ କିଛି ସମୟ, ଏବଂ ଡିସ୍କ ସ୍ଥାନ ନେଇପାରେ। ତଥାପି, RetraceServer ପରି, ଏହା ସୁଦୂର ଯନ୍ତ୍ରକୁ କୋରଡମ୍ପ ପଠାଇନଥାଏ।</long-description>
-    <long-description xml:lang="pa">ਡੀਬੱਗ-ਜਾਣਕਾਰੀ ਡਾਊਨਲੋਡ ਕਰਨ ਦੀ ਲੋੜ ਹੈ, ਜਿਸਨੂੰ ਕੁਝ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ, ਅਤੇ ਡਿਸਕ ਸਪੇਸ ਵੀ ਲੈ ਸਕਦਾ ਹੈ। ਇਸ ਤਰਾਂ, ਦੂਜੇ ਪਾਸੇ ਰੀਟਰੇਸਸਰਵਰ (RetraceServer), ਰਿਮੋਟ ਮਸ਼ੀਨਾਂ ਵੱਲ ਕੋਰਡੰਪ ਭੇਜਦਾ ਹੈ।</long-description>
+    <long-description xml:lang="pa">ਡੀਬੱਗ-ਜਾਣਕਾਰੀ ਪੰਡ ਡਾਊਨਲੋਡ ਕਰਨ ਦੀ ਲੋੜ ਹੈ, ਜਿਸਨੂੰ ਕੁੱਝ ਸਮਾਂ ਲੱਗ ਸਕਦਾ ਹੈ, ਅਤੇ ਡਿਸਕ ਸਪੇਸ ਵੀ ਲੈ ਸਕਦਾ ਹੈ। ਐਪਰ, ਰੀਟਰੇਸਸਰਵਰ (RetraceServer) ਦੇ ਉਲਟ, ਦੁਰੇਡੀਆਂ ਮਸ਼ੀਨਾਂ ਵੱਲ ਕੋਰਡੰਪ ਨਹੀਂ ਭੇਜਦਾ ਹੈ।</long-description>
     <long-description xml:lang="pl">Należy pobrać pakiety debuginfo, co może zająć dużo czasu i miejsca na dysku. Jednakże, w przeciwieństwie do RetraceServer, nie wysyła zrzutów core do zdalnych komputerów.</long-description>
     <long-description xml:lang="pt_BR">Precisa baixar pacotes de informação de depuração, que podem levar um tempo significativo e consome espaço de disco. Entretanto, diferente do Servidor de Retraçamento, não envia o coredump às máquinas remotas.</long-description>
     <long-description xml:lang="ru">Требует загрузки пакетов debuginfo, что может занять некоторое время и требует наличия свободного места на диске. Отличается от обработки на сервере тем, что не передаёт дамп удалённым компьютерам.</long-description>
@@ -91,7 +92,7 @@
     <long-description xml:lang="ta">பிழைதிருத்ததகவல் தொகுப்புகளை பதிவிறக்க வேண்டியுள்ளது, இவை குறிப்பிட்ட நேரத்தில், வட்டு இடத்தை எடுக்கும். எப்படியிருப்பினும், RetraceServer ஐ விரும்பாவிடில், coredump ஐ தொலை கணினிகளுக்கு அனுப்பாது.</long-description>
     <long-description xml:lang="te">డీబగ్‌యిన్ఫో ప్యాకేజీలను డౌన్‌లోడ్ చేయవలసివుంటుంది, దీనికి తగిన సమయం పడుతుంది, మరియు డిస్కు జాగాను తీసుకొనును. రీట్రేస్‌సర్వర్ వలె కాక, కోర్‌డంప్ ను రిమోట్ సర్వర్లకు పంపదు.</long-description>
     <long-description xml:lang="uk">Доведеться звантажити пакунки debuginfo. Звантаження може тривати досить довго, пакунки, які буде встановлено, можуть значно зменшити об’єм вільного місця на диску. Втім, на відміну від RetraceServer, не доведеться надсилати дамп ядра на віддалений комп’ютер.</long-description>
-    <long-description xml:lang="zh_CN">需要下载 debuginfo 软件包，这可能需要花较长时间并占用很多磁盘空间。然而和追溯服务器不同的是，它不把内存转储发送到远程机器。</long-description>
+    <long-description xml:lang="zh_CN">需要下载调试信息包，这可能要花较长时间并占用很多磁盘空间。不过，它不像使用回溯服务器一样要发送内存转储给远程机器。</long-description>
     <long-description xml:lang="zh_TW">需要下載 debuginfo 套件，並且可能會花上一段時間並消耗一些磁碟空間。然而，這不像 RetraceServer，所以不會傳送核心傾印資料至遠端機器。</long-description>
     <creates-items>backtrace</creates-items>
 </event>

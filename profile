@@ -75,4 +75,4 @@ for i in /etc/profile.d/*.sh ; do
 done
 
 unset i
-unset pathmunge
+unset -f pathmunge

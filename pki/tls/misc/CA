@@ -60,8 +60,8 @@ usage() {
 
 if [ -z "$OPENSSL" ]; then OPENSSL=openssl; fi
 
-if [ -z "$DAYS" ] ; then DAYS="-days 730" ; fi	# 1 year
-CADAYS="-days 3650"	# 10 years
+if [ -z "$DAYS" ] ; then DAYS="-days 365" ; fi	# 1 year
+CADAYS="-days 1095"	# 3 years
 REQ="$OPENSSL req $SSLEAY_CONFIG"
 CA="$OPENSSL ca $SSLEAY_CONFIG"
 VERIFY="$OPENSSL verify"

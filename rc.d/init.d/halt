@@ -162,8 +162,11 @@ awk '$2 !~ /\/(|dev|proc|selinux|sys)$/ && $1 !~ /^\/dev\/ram/ { print $2 }' \
     fstab-decode $UMOUNT -f $line
 done
 
+HALTARGS="-d"
+[ "$INIT_HALT" != "HALT" ] && HALTARGS="$HALTARGS -p"
+
 if [ -x /sbin/halt.local ]; then
-   /sbin/halt.local
+   /sbin/halt.local "$message" "$command" "$HALTARGS" "$kexec_command"
 fi
 
 # Tell init to re-exec itself.
@@ -177,6 +180,8 @@ done
 
 # If we left mdmon's running wait for the raidsets to become clean
 if [ -n "$OMITARGS" ]; then
+    sync
+    HALTARGS="$HALTARGS -n"
     mdadm --wait-clean --scan
 fi
 
@@ -207,7 +212,5 @@ fi
 # First, try kexec. If that fails, fall back to rebooting the old way.
 [ -n "$kexec_command" ] && $kexec_command -e -x >& /dev/null
 
-HALTARGS="-d"
-[ "$INIT_HALT" != "HALT" ] && HALTARGS="$HALTARGS -p"
 
 exec $command $HALTARGS

@@ -62,3 +62,4 @@ named:x:25:
 vmail:x:5000:
 nginx:x:493:
 ircd:x:492:
+screen:x:84:

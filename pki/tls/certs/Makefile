@@ -38,7 +38,7 @@ usage:
 	umask 77 ; \
 	PEM1=`/bin/mktemp /tmp/openssl.XXXXXX` ; \
 	PEM2=`/bin/mktemp /tmp/openssl.XXXXXX` ; \
-	/usr/bin/openssl req $(UTF8) -newkey rsa:2048 -keyout $$PEM1 -nodes -x509 -days 3650 -out $$PEM2 -set_serial $(SERIAL) ; \
+	/usr/bin/openssl req $(UTF8) -newkey rsa:2048 -keyout $$PEM1 -nodes -x509 -days 365 -out $$PEM2 -set_serial $(SERIAL) ; \
 	cat $$PEM1 >  $@ ; \
 	echo ""    >> $@ ; \
 	cat $$PEM2 >> $@ ; \
@@ -54,7 +54,7 @@ usage:
 
 %.crt: %.key
 	umask 77 ; \
-	/usr/bin/openssl req $(UTF8) -new -key $^ -x509 -days 3650 -out $@ -set_serial $(SERIAL)
+	/usr/bin/openssl req $(UTF8) -new -key $^ -x509 -days 365 -out $@ -set_serial $(SERIAL)
 
 TLSROOT=/etc/pki/tls
 KEY=$(TLSROOT)/private/localhost.key
@@ -71,4 +71,4 @@ $(CSR): $(KEY)
 
 $(CRT): $(KEY)
 	umask 77 ; \
-	/usr/bin/openssl req $(UTF8) -new -key $(KEY) -x509 -days 3650 -out $(CRT) -set_serial $(SERIAL)
+	/usr/bin/openssl req $(UTF8) -new -key $(KEY) -x509 -days 365 -out $(CRT) -set_serial $(SERIAL)

@@ -26,6 +26,11 @@ else
 	mount -n -t usbfs /proc/bus/usb /proc/bus/usb
 fi
 
+#remount /dev/shm to set attributes from fstab #669700
+mount -n -o remount /dev/shm >/dev/null 2>&1
+#remount /proc to set attributes from fstab #984003
+mount -n -o remount /proc >/dev/null 2>&1
+
 . /etc/init.d/functions
 
 PLYMOUTH=
@@ -204,7 +209,11 @@ fi
 [ -r /proc/mdstat -a -r /dev/md/md-device-map ] && /sbin/mdadm -IRs
 
 if [ -x /sbin/lvm ]; then
-	action $"Setting up Logical Volume Management:" /sbin/lvm vgchange -a y --sysinit
+	if [ ! -f /.nolvm ] && ! strstr "$cmdline" nolvm ; then
+		action $"Setting up Logical Volume Management:" /sbin/lvm vgchange -a ay --sysinit
+	else
+		echo $"Logical Volume Management disabled at boot."
+	fi
 fi
 
 if [ -f /etc/crypttab ]; then

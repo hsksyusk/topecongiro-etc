@@ -1,6 +1,6 @@
 # CentOS-Media.repo
 #
-# This repo is used to mount the default locations for a CDROM / DVD on
+#  This repo can be used with mounted DVD media, verify the mount point for
 #  CentOS-6.  You can use this repo and yum to install items directly off the
 #  DVD ISO that we release.
 #

@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# $Id: rdisc,v 1.5 2005/04/05 10:06:01 bastian Exp $
+# $Id$
 #
 ### BEGIN INIT INFO
 # Provides: rdisc

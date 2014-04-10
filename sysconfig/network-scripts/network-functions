@@ -22,7 +22,7 @@ get_hwaddr ()
 
 get_config_by_device ()
 {
-    LANG=C grep -l "^[[:space:]]*DEVICE=${1}\([[:space:]#]\|$\)" \
+    LANG=C grep -l "^[[:space:]]*DEVICE=\"\?${1}\"\?\([[:space:]#]\|$\)" \
 	/etc/sysconfig/network-scripts/ifcfg-* \
 	| LC_ALL=C sed -e "$__sed_discard_ignored_files"
 }
@@ -57,6 +57,17 @@ get_device_by_hwaddr ()
 get_uuid_by_config ()
 {
     dbus-send --system --print-reply --dest=com.redhat.ifcfgrh1 /com/redhat/ifcfgrh1 com.redhat.ifcfgrh1.GetIfcfgDetails string:"/etc/sysconfig/network-scripts/$1" 2>/dev/null | awk -F '"' '/string / { print $2 }'
+}
+
+generate_config_file_name () {
+	local ver=$1
+	if [ -s /etc/dhcp/dhclient$ver-${DEVICE}.conf ]; then
+		DHCLIENTCONF="-cf /etc/dhcp/dhclient$ver-${DEVICE}.conf";
+	elif [ -s /etc/dhclient$ver-${DEVICE}.conf ]; then
+		DHCLIENTCONF="-cf /etc/dhclient$ver-${DEVICE}.conf";
+	else
+		DHCLIENTCONF='';
+	fi
 }
 
 need_config ()
@@ -175,6 +186,7 @@ expand_config ()
         prefix[$i]=$(eval echo '$'PREFIX$idx)
         netmask[$i]=$(eval echo '$'NETMASK$idx)
         broadcast[$i]=$(eval echo '$'BROADCAST$idx)
+        arpcheck[$i]=$(eval echo '$'ARPCHECK$idx)
 
         if [ "${prefix[$i]}x" != "x" ]; then
             val=$(/bin/ipcalc --netmask "${ipaddr[$i]}/${prefix[$i]}")
@@ -195,6 +207,12 @@ expand_config ()
             val=$(/bin/ipcalc --broadcast ${ipaddr[$i]} ${netmask[$i]})
             broadcast[$i]=${val##BROADCAST=}
         fi
+
+        if [ "${arpcheck[$i]}x" != "x" ]; then
+            arpcheck[$i]=${arpcheck[$i]##ARPCHECK=}
+            arpcheck[$i]=${arpcheck[$i],,*}
+        fi
+
         i=$((i+1))
     done
 
@@ -407,9 +425,40 @@ is_wireless_device ()
 
 install_bonding_driver ()
 {
-   ethtool -i $1 2>/dev/null | grep -q "driver: bonding" && return 0
    [ ! -f /sys/class/net/bonding_masters ] && ( modprobe bonding || return 1 )
-   echo "+$1" > /sys/class/net/bonding_masters 2>/dev/null
+   if ! grep -sq "$1" /sys/class/net/bonding_masters; then
+       echo "+$1" > /sys/class/net/bonding_masters 2>/dev/null
+   fi
+   (
+	# Set config here
+	need_config "$1"
+	source_config
+	if [ -f /sys/class/net/${DEVICE}/bonding/slaves -a $(wc -l < /sys/class/net/${DEVICE}/bonding/slaves) -eq 0 ]; then
+	        /sbin/ip link set dev ${DEVICE} down
+
+	        # add the bits to setup driver parameters here
+	        for arg in $BONDING_OPTS ; do
+	            key=${arg%%=*};
+	            value=${arg##*=};
+	            if [ "${key}" = "arp_ip_target" -a "${value:0:1}" != "+" ]; then
+	                OLDIFS=$IFS;
+	                IFS=',';
+	                for arp_ip in $value; do
+			    if ! grep -q $arp_ip /sys/class/net/${DEVICE}/bonding/$key; then
+	                        echo +$arp_ip > /sys/class/net/${DEVICE}/bonding/$key
+			    fi
+	                done
+	                IFS=$OLDIFS;
+	            elif [ "${key}" = "arp_ip_target" ]; then
+		        if ! grep -q ${value#+} /sys/class/net/${DEVICE}/bonding/$key; then
+	                    echo "$value" > /sys/class/net/${DEVICE}/bonding/$key
+		        fi
+		    elif [ "${key}" != "primary" ]; then
+	                echo $value > /sys/class/net/${DEVICE}/bonding/$key
+	            fi
+	        done
+	fi
+   )
    return 0
 }
 

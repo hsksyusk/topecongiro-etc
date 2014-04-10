@@ -1373,32 +1373,32 @@
 				</dir>
 			</dir>
 			<dir name="yelp">
-				<entry name="fixed_font" mtime="1341761133" type="schema" stype="string" owner="yelp" gettext_domain="yelp">
-					<local_schema locale="C" short_desc="固定幅テキストのフォント">
+				<entry name="fixed_font" mtime="1397132811" type="schema" stype="string" owner="yelp" gettext_domain="yelp">
+					<local_schema locale="C" short_desc="Font for fixed text">
 						<default type="string">
 							<stringvalue>Monospace 12</stringvalue>
 						</default>
-						<longdesc>等幅のテキストに適用するフォントです。</longdesc>
+						<longdesc>Font for text with fixed width.</longdesc>
 					</local_schema>
 				</entry>
-				<entry name="variable_font" mtime="1341761133" type="schema" stype="string" owner="yelp" gettext_domain="yelp">
-					<local_schema locale="C" short_desc="テキストのフォント">
+				<entry name="variable_font" mtime="1397132811" type="schema" stype="string" owner="yelp" gettext_domain="yelp">
+					<local_schema locale="C" short_desc="Font for text">
 						<default type="string">
 							<stringvalue>Sans 12</stringvalue>
 						</default>
-						<longdesc>可変幅のテキストに適用するフォントです。</longdesc>
+						<longdesc>Font for text with variable width.</longdesc>
 					</local_schema>
 				</entry>
-				<entry name="use_system_fonts" mtime="1341761133" type="schema" stype="bool" owner="yelp" gettext_domain="yelp">
-					<local_schema locale="C" short_desc="システム・フォントを使用する">
+				<entry name="use_system_fonts" mtime="1397132811" type="schema" stype="bool" owner="yelp" gettext_domain="yelp">
+					<local_schema locale="C" short_desc="Use system fonts">
 						<default type="bool" value="true"/>
-						<longdesc>システムのデフォルト・フォントを使用します。</longdesc>
+						<longdesc>Use the default fonts set for the system.</longdesc>
 					</local_schema>
 				</entry>
-				<entry name="use_caret" mtime="1341761133" type="schema" stype="bool" owner="yelp" gettext_domain="yelp">
-					<local_schema locale="C" short_desc="キャレットを使用する">
+				<entry name="use_caret" mtime="1397132811" type="schema" stype="bool" owner="yelp" gettext_domain="yelp">
+					<local_schema locale="C" short_desc="Use caret">
 						<default type="bool" value="true"/>
-						<longdesc>ヘルプを表示したらキーボードから操作できるキャレットを使用します。</longdesc>
+						<longdesc>Use a keyboard-controllable caret when viewing pages.</longdesc>
 					</local_schema>
 				</entry>
 			</dir>
@@ -1636,10 +1636,10 @@
 			</dir>
 		</dir>
 		<dir name="yelp">
-			<entry name="fixed_font" mtime="1341761133" schema="/schemas/apps/yelp/fixed_font"/>
-			<entry name="variable_font" mtime="1341761133" schema="/schemas/apps/yelp/variable_font"/>
-			<entry name="use_system_fonts" mtime="1341761133" schema="/schemas/apps/yelp/use_system_fonts"/>
-			<entry name="use_caret" mtime="1341761133" schema="/schemas/apps/yelp/use_caret"/>
+			<entry name="fixed_font" mtime="1397132811" schema="/schemas/apps/yelp/fixed_font"/>
+			<entry name="variable_font" mtime="1397132811" schema="/schemas/apps/yelp/variable_font"/>
+			<entry name="use_system_fonts" mtime="1397132811" schema="/schemas/apps/yelp/use_system_fonts"/>
+			<entry name="use_caret" mtime="1397132811" schema="/schemas/apps/yelp/use_caret"/>
 		</dir>
 		<dir name="notification-daemon">
 			<entry name="default_sound" mtime="1341761127" schema="/schemas/apps/notification-daemon/default_sound"/>

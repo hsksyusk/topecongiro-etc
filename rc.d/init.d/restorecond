@@ -82,7 +82,7 @@ case "$1" in
 	[ -e /var/lock/subsys/restorecond ] && restart || :
 	;;
   *)
-        echo $"Usage: $0 {start|stop|restart|force-reload|status|condrestart}"
+        echo $"Usage: $0 {start|stop|restart|reload|force-reload|status|condrestart}"
         RETVAL=3
 esac
 

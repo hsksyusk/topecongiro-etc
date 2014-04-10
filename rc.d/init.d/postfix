@@ -43,7 +43,7 @@ ALIASESDB_STAMP=/var/lib/misc/postfix.aliasesdb-stamp
 # Script to update chroot environment
 CHROOT_UPDATE=/etc/postfix/chroot-update
 
-status -p $pidfile -l $(basename $lockfile) master >/dev/null 2>&1
+status -p $pidfile -l $(basename $lockfile) -b /usr/libexec/postfix/master master >/dev/null 2>&1
 running=$?
 
 conf_check() {
@@ -151,7 +151,7 @@ case "$1" in
 	check
 	;;
   status)
-  	status -p $pidfile -l $(basename $lockfile) master
+	status -p $pidfile -l $(basename $lockfile) -b /usr/libexec/postfix/master master
 	;;
   condrestart)
 	[ $running -eq 0 ] || exit 0

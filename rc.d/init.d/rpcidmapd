@@ -70,7 +70,7 @@ case "$1" in
 	[ $uid -ne 0 ] && exit 4
 
 	# Stop daemon.
-	echo -n $"Stopping RPC idmapd: "
+	echo -n $"Shutting down RPC idmapd: "
 	killproc $prog
 	RETVAL=$?
 	echo

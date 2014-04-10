@@ -34,6 +34,8 @@
 #       NICE - Change the raid check CPU and IO priority in order to make
 #		the system more responsive during lengthy checks.  Valid
 #		values are high, normal, low, idle.
+#	MAXCONCURENT - Limit the number of devices to be checked at a time.
+#		By default all devices will be checked at the same time.
 #
 # Note: the raid-check script is run by the /etc/cron.d/raid-check cron job.
 # Users may modify the frequency and timing at which raid-check is run by
@@ -51,3 +53,4 @@ NICE=low
 CHECK_DEVS=""
 REPAIR_DEVS=""
 SKIP_DEVS=""
+MAXCONCURRENT=

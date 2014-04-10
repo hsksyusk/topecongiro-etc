@@ -8,6 +8,13 @@
 # processname: mysqld
 # config: /etc/my.cnf
 # pidfile: /var/run/mysqld/mysqld.pid
+### BEGIN INIT INFO
+# Provides: mysqld
+# Required-Start: $local_fs $remote_fs $network $named $syslog $time
+# Required-Stop: $local_fs $remote_fs $network $named $syslog $time
+# Short-Description: start and stop MySQL server
+# Description: MySQL database server
+### END INIT INFO
 
 # Source function library.
 . /etc/rc.d/init.d/functions
@@ -54,19 +61,31 @@ mypidfile="$result"
 start(){
     [ -x $exec ] || exit 5
     # check to see if it's already running
+    MYSQLDRUNNING=0
+    if [ -f "$mypidfile" ]; then
+	MYSQLPID=`cat "$mypidfile" 2>/dev/null`
+	if [ -n "$MYSQLPID" ] && [ -d "/proc/$MYSQLPID" ] ; then
+	    MYSQLDRUNNING=1
+	fi
+    fi
     RESPONSE=`/usr/bin/mysqladmin --socket="$socketfile" --user=UNKNOWN_MYSQL_USER ping 2>&1`
-    if [ $? = 0 ]; then
+    if [ $MYSQLDRUNNING = 1 ] && [ $? = 0 ]; then
 	# already running, do nothing
 	action $"Starting $prog: " /bin/true
 	ret=0
-    elif echo "$RESPONSE" | grep -q "Access denied for user"
+    elif [ $MYSQLDRUNNING = 1 ] && echo "$RESPONSE" | grep -q "Access denied for user"
     then
 	# already running, do nothing
 	action $"Starting $prog: " /bin/true
 	ret=0
     else
     	# prepare for start
-	touch "$errlogfile"
+	touch "$errlogfile" 2>/dev/null
+	if [ $? -ne 0 ]; then
+	     # failed to touch log file, probably insufficient permissions
+	    action $"Starting $prog: " /bin/false
+	    return 4
+	fi
 	chown mysql:mysql "$errlogfile" 
 	chmod 0640 "$errlogfile"
 	[ -x /sbin/restorecon ] && /sbin/restorecon "$errlogfile"
@@ -89,6 +108,15 @@ start(){
 	fi
 	chown mysql:mysql "$datadir"
 	chmod 0755 "$datadir"
+	# We check if there is already a process using the socket file,
+	# since otherwise this init script could report false positive
+	# result and mysqld_safe would remove the socket file, which
+	# actually uses a different daemon.
+	if fuser "$socketfile" &>/dev/null ; then
+	    echo "Socket file $socketfile exists. Is another MySQL daemon already running with the same unix socket?"
+	    action $"Starting $prog: " /bin/false
+	    return 1
+	fi
 	# Pass all the options determined above, to ensure consistent behavior.
 	# In many cases mysqld_safe would arrive at the same conclusions anyway
 	# but we need to be sure.  (An exception is that we don't force the
@@ -107,7 +135,19 @@ start(){
 	ret=0
 	TIMEOUT="$STARTTIMEOUT"
 	while [ $TIMEOUT -gt 0 ]; do
-	    RESPONSE=`/usr/bin/mysqladmin --socket="$socketfile" --user=UNKNOWN_MYSQL_USER ping 2>&1` && break
+	    RESPONSE=`/usr/bin/mysqladmin --socket="$socketfile" --user=UNKNOWN_MYSQL_USER ping 2>&1`
+	    mret=$?
+	    if [ $mret -eq 0 ]; then
+		break
+	    fi
+	    # exit codes 1, 11 (EXIT_CANNOT_CONNECT_TO_SERVICE) are expected,
+	    # anything else suggests a configuration error
+	    if [ $mret -ne 1 -a $mret -ne 11 ]; then
+		echo "$RESPONSE"
+		echo "Cannot check for MySQL Daemon startup because of mysqladmin failure."
+		ret=1
+		break
+	    fi
 	    echo "$RESPONSE" | grep -q "Access denied for user" && break
 	    if ! /bin/kill -0 $safe_pid 2>/dev/null; then
 		echo "MySQL Daemon failed to start."
@@ -123,6 +163,7 @@ start(){
 	fi
 	if [ $ret -eq 0 ]; then
 	    action $"Starting $prog: " /bin/true
+	    chmod o+r $mypidfile >/dev/null 2>&1
 	    touch $lockfile
 	else
 	    action $"Starting $prog: " /bin/false
@@ -137,7 +178,7 @@ stop(){
 	    action $"Stopping $prog: " /bin/true
 	    return 0
 	fi
-	MYSQLPID=`cat "$mypidfile"`
+	MYSQLPID=`cat "$mypidfile" 2>/dev/null`
 	if [ -n "$MYSQLPID" ]; then
 	    /bin/kill "$MYSQLPID" >/dev/null 2>&1
 	    ret=$?

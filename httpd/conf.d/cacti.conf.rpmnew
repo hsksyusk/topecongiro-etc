@@ -2,7 +2,9 @@
 # Cacti: An rrd based graphing tool
 #
 
-# Change the following ACLs to open up Cacti to other network devices.
+# For security reasons, the Cacti web interface is accessible only to
+# localhost in the default configuration. If you want to allow other clients
+# to access your Cacti installation, change the httpd ACLs below.
 # For example:
 # On httpd 2.4, change "Require host localhost" to "Require all granted".
 # On httpd 2.2, change "Allow from localhost" to "Allow from all".

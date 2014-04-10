@@ -104,7 +104,7 @@ __umount_loop() {
 			remaining=$(LC_ALL=C awk "/^#/ {next} $1" "$2" | sort -r)
 		done
 		[ -z "$remaining" ] && break
-		fstab-decode /sbin/fuser -k -m $sig $remaining >/dev/null
+		fstab-decode /sbin/fuser -m $remaining 2>/dev/null  | sed -e "s/\b$$\b//" | xargs kill $sig >/dev/null
 		sleep 3
 		retry=$(($retry -1))
 		sig=-9
@@ -148,6 +148,7 @@ __umount_loopback_loop() {
 __pids_var_run() {
 	local base=${1##*/}
 	local pid_file=${2:-/var/run/$base.pid}
+	local binary=$3
 
 	pid=
 	if [ -f "$pid_file" ] ; then
@@ -158,7 +159,13 @@ __pids_var_run() {
 			read line
 			[ -z "$line" ] && break
 			for p in $line ; do
-				[ -z "${p//[0-9]/}" -a -d "/proc/$p" ] && pid="$pid $p"
+				if [ -z "${p//[0-9]/}" -a -d "/proc/$p" ] ; then
+					if [ -n "$binary" ] ; then
+						local b=$(__readlink /proc/$p/exe)
+						[ "$b" != "$binary" ] && continue
+					fi
+					pid="$pid $p"
+				fi
 			done
 		done < "$pid_file"
 
@@ -269,9 +276,9 @@ daemon() {
 
 # A function to stop a program.
 killproc() {
-	local RC killlevel= base pid pid_file= delay
+	local RC killlevel= base pid pid_file= delay try binary=
 
-	RC=0; delay=3
+	RC=0; delay=3; try=0
 	# Test syntax.
 	if [ "$#" -eq 0 ]; then
 		echo $"Usage: killproc [-p pidfile] [ -d delay] {program} [-signal]"
@@ -281,8 +288,21 @@ killproc() {
 		pid_file=$2
 		shift 2
 	fi
+	if [ "$1" = "-b" ]; then
+		if [ -z $pid_file ]; then
+			echo $"-b option can be used only with -p"
+			echo $"Usage: killproc -p pidfile -b binary program"
+			return 1
+		fi
+		binary=$2
+		shift 2
+	fi
 	if [ "$1" = "-d" ]; then
-		delay=$2
+		delay=$(echo $2 | awk -v RS=' ' -v IGNORECASE=1 '{if($1!~/^[0-9.]+[smhd]?$/) exit 1;d=$1~/s$|^[0-9.]*$/?1:$1~/m$/?60:$1~/h$/?60*60:$1~/d$/?24*60*60:-1;if(d==-1) exit 1;delay+=d*$1} END {printf("%d",delay+0.5)}')
+		if [ "$?" -eq 1 ]; then
+			echo $"Usage: killproc [-p pidfile] [ -d delay] {program} [-signal]"
+			return 1
+		fi
 		shift 2
 	fi
         
@@ -294,7 +314,7 @@ killproc() {
         base=${1##*/}
 
         # Find pid.
-	__pids_var_run "$1" "$pid_file"
+	__pids_var_run "$1" "$pid_file" "$binary"
 	RC=$?
 	if [ -z "$pid" ]; then
 		if [ -z "$pid_file" ]; then
@@ -312,11 +332,17 @@ killproc() {
 			   # TERM first, then KILL if not dead
 			   kill -TERM $pid >/dev/null 2>&1
 			   usleep 100000
-			   if checkpid $pid && sleep 1 &&
-			      checkpid $pid && sleep $delay &&
-			      checkpid $pid ; then
-                                kill -KILL $pid >/dev/null 2>&1
-				usleep 100000
+			   if checkpid $pid ; then
+				try=0
+				while [ $try -lt $delay ] ; do
+					checkpid $pid || break
+					sleep 1
+					let try+=1
+				done
+				if checkpid $pid ; then
+					kill -KILL $pid >/dev/null 2>&1
+					usleep 100000
+				fi
 			   fi
 		        fi
 			checkpid $pid
@@ -392,7 +418,7 @@ pidofproc() {
 }
 
 status() {
-	local base pid lock_file= pid_file=
+	local base pid lock_file= pid_file= binary=
 
 	# Test syntax.
 	if [ "$#" = 0 ] ; then
@@ -407,10 +433,19 @@ status() {
 		lock_file=$2
 		shift 2
 	fi
+	if [ "$1" = "-b" ]; then
+		if [ -z $pid_file ]; then
+			echo $"-b option can be used only with -p"
+			echo $"Usage: status -p pidfile -b binary program"
+			return 1
+		fi
+		binary=$2
+		shift 2
+	fi
 	base=${1##*/}
 
 	# First try "pidof"
-	__pids_var_run "$1" "$pid_file"
+	__pids_var_run "$1" "$pid_file" "$binary"
 	RC=$?
 	if [ -z "$pid_file" -a -z "$pid" ]; then
 		pid="$(__pids_pidof "$1")"

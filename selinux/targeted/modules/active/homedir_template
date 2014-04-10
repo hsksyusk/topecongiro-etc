@@ -9,17 +9,17 @@ HOME_DIR/.mozilla/plugins/nprhapengine\.so.*	--	system_u:object_r:textrel_shlib_
 HOME_DIR/.kde/share/apps/networkmanagement/certificates(/.*)?	system_u:object_r:home_cert_t:s0
 HOME_ROOT/a?quota\.(user|group)	--	system_u:object_r:quota_db_t:s0
 HOME_DIR/bin(/.*)?	system_u:object_r:home_bin_t:s0
-HOME_DIR/\.pki(/.*)?	system_u:object_r:home_cert_t:s0
 HOME_DIR/\.ssh(/.*)?	system_u:object_r:ssh_home_t:s0
+HOME_DIR/\.pki(/.*)?	system_u:object_r:home_cert_t:s0
 HOME_DIR/\.kde(/.*)?	system_u:object_r:config_home_t:s0
 HOME_DIR/\.uml(/.*)?	system_u:object_r:uml_rw_t:s0
 HOME_DIR/dead.letter	--	system_u:object_r:mail_home_t:s0
-HOME_DIR/\.dmrc.*	--	system_u:object_r:xdm_home_t:s0
 HOME_DIR/\.DCOP.*	--	system_u:object_r:iceauth_home_t:s0
+HOME_DIR/\.dmrc.*	--	system_u:object_r:xdm_home_t:s0
 HOME_DIR/\.gvfs(/.*)?	<<none>>
-HOME_DIR/Audio(/.*)?	system_u:object_r:audio_home_t:s0
 HOME_DIR/Music(/.*)?	system_u:object_r:audio_home_t:s0
 HOME_DIR/\.cert(/.*)?	system_u:object_r:home_cert_t:s0
+HOME_DIR/Audio(/.*)?	system_u:object_r:audio_home_t:s0
 HOME_DIR/\.dbus(/.*)?	system_u:object_r:dbus_home_t:s0
 HOME_DIR/\.xine(/.*)?	system_u:object_r:config_home_t:s0
 HOME_DIR/\.java(/.*)?	system_u:object_r:mozilla_home_t:s0
@@ -54,7 +54,7 @@ HOME_DIR/\.mplayer(/.*)?	system_u:object_r:mplayer_home_t:s0
 HOME_DIR/local/bin(/.*)?	system_u:object_r:home_bin_t:s0
 HOME_DIR/\.ethereal(/.*)?	system_u:object_r:ethereal_home_t:s0
 HOME_DIR/\.netscape(/.*)?	system_u:object_r:mozilla_home_t:s0
-HOME_DIR/public_git(/.*)?	system_u:object_r:git_session_content_t:s0
+HOME_DIR/public_git(/.*)?	system_u:object_r:git_user_content_t:s0
 HOME_DIR/\.gstreamer-.*	system_u:object_r:gstreamer_home_t:s0
 HOME_DIR/\.serverauth.*	--	system_u:object_r:xauth_home_t:s0
 HOME_DIR/\.Xauthority.*	--	system_u:object_r:xauth_home_t:s0
@@ -65,9 +65,9 @@ HOME_DIR/\.gstreamer-.*/plugins/.*\.so.*	--	system_u:object_r:textrel_shlib_t:s0
 HOME_ROOT/lost\+found/.*	<<none>>
 HOME_DIR/\.local/share(.*)?	system_u:object_r:data_home_t:s0
 HOME_DIR/\.thunderbird(/.*)?	system_u:object_r:mozilla_home_t:s0
-HOME_DIR/\.ICEauthority.*	--	system_u:object_r:iceauth_home_t:s0
-HOME_DIR/\.ICEauthority.*	--	system_u:object_r:iceauth_home_t:s0
 HOME_DIR/\.fonts\.cache-.*	--	system_u:object_r:user_fonts_cache_t:s0
+HOME_DIR/\.ICEauthority.*	--	system_u:object_r:iceauth_home_t:s0
+HOME_DIR/\.ICEauthority.*	--	system_u:object_r:iceauth_home_t:s0
 HOME_DIR/\.gcjwebplugin(/.*)?	system_u:object_r:nsplugin_home_t:s0
 HOME_DIR/\.spamassassin(/.*)?	system_u:object_r:spamc_home_t:s0
 HOME_DIR/\.icedteaplugin(/.*)?	system_u:object_r:nsplugin_home_t:s0
@@ -88,7 +88,7 @@ HOME_ROOT/\.journal	<<none>>
 HOME_DIR/\.screenrc	--	system_u:object_r:screen_home_t:s0
 HOME_DIR/\.Xdefaults	system_u:object_r:config_home_t:s0
 HOME_DIR/\.hushlogin	--	system_u:object_r:local_login_home_t:s0
-HOME_DIR/\.gitconfig	--	system_u:object_r:git_session_content_t:s0
+HOME_DIR/\.gitconfig	--	system_u:object_r:git_user_content_t:s0
 HOME_DIR/\.fonts\.conf	--	system_u:object_r:user_fonts_config_t:s0
 HOME_ROOT/lost\+found	-d	system_u:object_r:lost_found_t:s0
 HOME_DIR/\.procmailrc	--	system_u:object_r:procmail_home_t:s0

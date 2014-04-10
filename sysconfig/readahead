@@ -1,8 +1,8 @@
 # enable readahead at system startup
-READAHEAD="yes"
+READAHEAD="no"
 
 # enable (at least monthly) readahead list collection
-READAHEAD_COLLECT="yes"
+READAHEAD_COLLECT="no"
 
 # collect x seconds more after prefdm started
 READAHEAD_EXTRA_COLLECT="10"
