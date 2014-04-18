@@ -3,6 +3,5 @@
 /sbin/nologin
 /bin/tcsh
 /bin/csh
-/usr/bin/tmux
 /bin/zsh
 /bin/dash
