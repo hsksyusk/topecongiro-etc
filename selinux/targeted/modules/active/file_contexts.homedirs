@@ -25,12 +25,12 @@
 /home/[^/]*/\.kde(/.*)?	unconfined_u:object_r:config_home_t:s0
 /home/[^/]*/\.uml(/.*)?	unconfined_u:object_r:uml_rw_t:s0
 /home/[^/]*/dead.letter	--	unconfined_u:object_r:mail_home_t:s0
-/home/[^/]*/\.DCOP.*	--	unconfined_u:object_r:iceauth_home_t:s0
 /home/[^/]*/\.dmrc.*	--	unconfined_u:object_r:xdm_home_t:s0
-/home/[^/]*/\.gvfs(/.*)?	<<none>>
-/home/[^/]*/Music(/.*)?	unconfined_u:object_r:audio_home_t:s0
-/home/[^/]*/\.cert(/.*)?	unconfined_u:object_r:home_cert_t:s0
+/home/[^/]*/\.DCOP.*	--	unconfined_u:object_r:iceauth_home_t:s0
 /home/[^/]*/Audio(/.*)?	unconfined_u:object_r:audio_home_t:s0
+/home/[^/]*/Music(/.*)?	unconfined_u:object_r:audio_home_t:s0
+/home/[^/]*/\.gvfs(/.*)?	<<none>>
+/home/[^/]*/\.cert(/.*)?	unconfined_u:object_r:home_cert_t:s0
 /home/[^/]*/\.dbus(/.*)?	unconfined_u:object_r:dbus_home_t:s0
 /home/[^/]*/\.xine(/.*)?	unconfined_u:object_r:config_home_t:s0
 /home/[^/]*/\.java(/.*)?	unconfined_u:object_r:mozilla_home_t:s0
@@ -66,17 +66,16 @@
 /home/[^/]*/\.netscape(/.*)?	unconfined_u:object_r:mozilla_home_t:s0
 /home/[^/]*/public_git(/.*)?	unconfined_u:object_r:git_user_content_t:s0
 /home/[^/]*/\.gstreamer-.*	unconfined_u:object_r:gstreamer_home_t:s0
-/home/[^/]*/\.serverauth.*	--	unconfined_u:object_r:xauth_home_t:s0
 /home/[^/]*/\.Xauthority.*	--	unconfined_u:object_r:xauth_home_t:s0
+/home/[^/]*/\.serverauth.*	--	unconfined_u:object_r:xauth_home_t:s0
 /home/[^/]*/\.fontconfig(/.*)?	unconfined_u:object_r:user_fonts_cache_t:s0
 /home/[^/]*/\.fonts/auto(/.*)?	unconfined_u:object_r:user_fonts_cache_t:s0
 /home/[^/]*/\.macromedia(/.*)?	unconfined_u:object_r:nsplugin_home_t:s0
 /home/[^/]*/\.gstreamer-.*/plugins/.*\.so.*	--	unconfined_u:object_r:textrel_shlib_t:s0
 /home/[^/]*/\.local/share(.*)?	unconfined_u:object_r:data_home_t:s0
 /home/[^/]*/\.thunderbird(/.*)?	unconfined_u:object_r:mozilla_home_t:s0
+/home/[^/]*/\.ICEauthority.*	--	unconfined_u:object_r:iceauth_home_t:s0
 /home/[^/]*/\.fonts\.cache-.*	--	unconfined_u:object_r:user_fonts_cache_t:s0
-/home/[^/]*/\.ICEauthority.*	--	unconfined_u:object_r:iceauth_home_t:s0
-/home/[^/]*/\.ICEauthority.*	--	unconfined_u:object_r:iceauth_home_t:s0
 /home/[^/]*/\.gcjwebplugin(/.*)?	unconfined_u:object_r:nsplugin_home_t:s0
 /home/[^/]*/\.spamassassin(/.*)?	unconfined_u:object_r:spamc_home_t:s0
 /home/[^/]*/\.icedteaplugin(/.*)?	unconfined_u:object_r:nsplugin_home_t:s0

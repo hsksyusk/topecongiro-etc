@@ -11,3 +11,7 @@ COMPRESSAFTER=31
 # Parameters for the system activity data collector (see sadc manual page)
 # which are used for the generation of log files.
 SADC_OPTIONS="-S DISK"
+
+# Compression program to use.
+ZIP="bzip2"
+

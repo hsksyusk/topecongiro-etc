@@ -61,6 +61,8 @@ if [ "${TYPE}" = "Bridge" ]; then
       fi
       [ -n "${DELAY}" ] && /usr/sbin/brctl setfd ${DEVICE} ${DELAY}
       [ -n "${STP}" ] && /usr/sbin/brctl stp ${DEVICE} ${STP}
+      [ -n "${PRIO}" ] && /usr/sbin/brctl setbridgeprio ${DEVICE} ${PRIO}
+      [ -n "${AGEING}" ] && /usr/sbin/brctl setageing ${DEVICE} ${AGEING}
       # add the bits to setup driver parameters here
       for arg in $BRIDGING_OPTS ; do
           key=${arg%%=*};
@@ -240,7 +242,7 @@ else
         if ! LC_ALL=C ip addr ls ${REALDEVICE} | LC_ALL=C grep -q "${ipaddr[$idx]}/${prefix[$idx]}" ; then
             if [ "${REALDEVICE}" != "lo" ] && [ "${arpcheck[$idx]}" != "no" ] ; then
 				echo $"Determining if ip address ${ipaddr[$idx]} is already in use for device ${REALDEVICE}..."
-				if ! /sbin/arping -q -c 2 -w 3 -D -I ${REALDEVICE} ${ipaddr[$idx]} ; then
+				if ! /sbin/arping -q -c 2 -w ${ARPING_WAIT:-3} -D -I ${REALDEVICE} ${ipaddr[$idx]} ; then
 					net_log $"Error, some other host already uses address ${ipaddr[$idx]}."
 					exit 1
 				fi
@@ -286,6 +288,16 @@ if [ -z "${NOZEROCONF}" -a "${ISALIAS}" = "no" -a "${REALDEVICE}" != "lo" ]; the
     ip route add 169.254.0.0/16 dev ${REALDEVICE} metric $((1000 + $(cat /sys/class/net/${REALDEVICE}/ifindex))) scope link
 fi
 
+if [ "${TYPE}" = "Bridge" ]; then
+    for arg in $BRIDGING_OPTS ; do
+        key=${arg%%=*};
+        value=${arg##*=};
+        if [ "${key}" = "multicast_router" -o "${key}" = "hash_max" -o "${key}" = "multicast_snooping" ]; then
+            echo $value > /sys/class/net/${DEVICE}/bridge/$key
+        fi
+    done
+fi
+
 # IPv6 initialisation?
 /etc/sysconfig/network-scripts/ifup-ipv6 ${CONFIG}
 if [[ "${DHCPV6C}"  = [Yy1]* ]] && [ -x /sbin/dhclient ]; then
@@ -302,10 +314,6 @@ if [[ "${DHCPV6C}"  = [Yy1]* ]] && [ -x /sbin/dhclient ]; then
             exit 1
         fi
     fi
-fi
-
-if [ "${IPX}" = yes ]; then
-       /etc/sysconfig/network-scripts/ifup-ipx ${DEVICE}
 fi
 
 exec /etc/sysconfig/network-scripts/ifup-post ${CONFIG} ${2}

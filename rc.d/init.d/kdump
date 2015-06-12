@@ -110,6 +110,59 @@ function save_kernel_logs()
 
 }
 
+#
+# This function returns the "initial apicid" of the
+# boot cpu (cpu 0) if present.
+#
+function get_bootcpu_initial_apicid()
+{
+    awk '                                                       \
+	BEGIN { CPU = "-1"; }                                   \
+	$1=="processor" && $2==":"      { CPU = $NF; }          \
+	CPU=="0" && /initial apicid/    { print $NF; }          \
+	'                                                       \
+	/proc/cpuinfo
+}
+
+#
+# This function appends argument "$2=$3" to string ($1) if not already present.
+#
+function append_cmdline()
+{
+    local cmdline=$1
+    local newstr=${cmdline/$2/""}
+
+    # unchanged str implies argument wasn't there
+    if [ "$cmdline" == "$newstr" ]; then
+        cmdline="${cmdline} ${2}=${3}"
+    fi
+
+    echo $cmdline
+}
+
+# This function performs a series of edits on the command line
+function prepare_cmdline()
+{
+	local cmdline;
+	if [ -z "$KDUMP_COMMANDLINE" ]; then
+		cmdline=`cat /proc/cmdline`
+	else
+		cmdline=${KDUMP_COMMANDLINE}
+	fi
+	cmdline=`remove_cmdline_param "$cmdline" crashkernel mem hugepages hugepagesz`
+	cmdline="${cmdline} ${KDUMP_COMMANDLINE_APPEND}"
+	avoid_cdrom_drive
+	KDUMP_COMMANDLINE="${KDUMP_COMMANDLINE} ${KDUMP_IDE_NOPROBE_COMMANDLINE}"
+
+	local id=`get_bootcpu_initial_apicid`
+	if [ ! -z ${id} ] ; then
+		cmdline=`append_cmdline "${cmdline}" disable_cpu_apicid ${id}`
+	fi
+
+	echo $cmdline
+}
+
+
 function save_core()
 {
 	local kdump_path
@@ -206,8 +259,12 @@ function check_config()
 		FORCE_REBUILD=`grep ^extra_modules $KDUMP_CONFIG_FILE`
 		files="$KDUMP_CONFIG_FILE $kdump_kernel $EXTRA_FILES"
 
-		#check to see if cluster is configured to use fence_kdump
-		if [ -f "$CLUSTER_CONFIG_FILE" ] && grep -q fence_kdump "$CLUSTER_CONFIG_FILE"
+		# changes in CLUSTER_CONFIG_FILE should be monitored only if fence_kdump
+		# is not configured using fence_kdump_nodes option in /etc/kdump.conf
+		# and fence_kdump is configured in Pacemaker cluster
+		if ! grep -q ^fence_kdump_nodes /etc/kdump.conf \
+			&& [ -f "$CLUSTER_CONFIG_FILE" ] \
+			&& grep -q fence_kdump "$CLUSTER_CONFIG_FILE"
 		then
 		    files="$files $CLUSTER_CONFIG_FILE"
 		    if [ -f "$FENCE_KDUMP_CONFIG" ]; then
@@ -395,17 +452,15 @@ function load_kdump()
 			return 1
 		fi
 	fi
-	KDUMP_COMMANDLINE=`remove_cmdline_param "$KDUMP_COMMANDLINE" crashkernel mem hugepages hugepagesz`
-	KDUMP_COMMANDLINE="${KDUMP_COMMANDLINE} ${KDUMP_COMMANDLINE_APPEND}"
-	avoid_cdrom_drive
-	KDUMP_COMMANDLINE="${KDUMP_COMMANDLINE} ${KDUMP_IDE_NOPROBE_COMMANDLINE}"
+
+	KDUMP_COMMANDLINE=`prepare_cmdline`
 
 	if ! grep -q /sys/kernel/debug /proc/mounts;
 	then
 		mount -t debugfs debug /sys/kernel/debug
 		MNTDEBUG=/sys/kernel/debug
 	fi
-	
+
 	$KEXEC $KEXEC_ARGS $standard_kexec_args \
 		--command-line="$KDUMP_COMMANDLINE" \
 		--initrd=$kdump_initrd $kdump_kernel 2>/dev/null

@@ -145,6 +145,9 @@ fi
 nashpid=$(pidof nash 2>/dev/null)
 [ -n "$nashpid" ] && kill $nashpid >/dev/null 2>&1
 unset nashpid
+
+apply_sysctl
+
 /sbin/start_udev
 
 # Load other user-defined modules
@@ -210,7 +213,7 @@ fi
 
 if [ -x /sbin/lvm ]; then
 	if [ ! -f /.nolvm ] && ! strstr "$cmdline" nolvm ; then
-		action $"Setting up Logical Volume Management:" /sbin/lvm vgchange -a ay --sysinit
+		action $"Setting up Logical Volume Management:" /sbin/lvm vgchange -a ay --sysinit --ignoreskippedcluster
 	else
 		echo $"Logical Volume Management disabled at boot."
 	fi
@@ -400,6 +403,10 @@ if [ "$READONLY" = "yes" -o "$TEMPORARY_STATE" = "yes" ]; then
 			done
 		fi
 	fi
+
+        if mount | grep -q /var/lib/nfs/rpc_pipefs ; then
+                mount -t rpc_pipefs sunrpc /var/lib/nfs/rpc_pipefs && service rpcidmapd restart
+        fi
 fi
 
 if [[ " $fsckoptions" != *" -y"* ]]; then
@@ -512,9 +519,9 @@ fi
 # filesystems are NOT unmounted in single user mode.
 # The 'no' applies to all listed filesystem types. See mount(8).
 if [ "$READONLY" != "yes" ] ; then
-	action $"Mounting local filesystems: " mount -a -t nonfs,nfs4,smbfs,ncpfs,cifs,gfs,gfs2 -O no_netdev
+	action $"Mounting local filesystems: " mount -a -t nonfs,nfs4,smbfs,ncpfs,cifs,gfs,gfs2,glusterfs -O no_netdev
 else
-	action $"Mounting local filesystems: " mount -a -n -t nonfs,nfs4,smbfs,ncpfs,cifs,gfs,gfs2 -O no_netdev
+	action $"Mounting local filesystems: " mount -a -n -t nonfs,nfs4,smbfs,ncpfs,cifs,gfs,gfs2i,glusterfs -O no_netdev
 fi
 
 # Update quotas if necessary
@@ -545,7 +552,7 @@ else
 fi
 if [ "$READONLY" != "yes" ]; then
 	chmod 600 /var/lib/random-seed
-	dd if=/dev/urandom of=/var/lib/random-seed count=1 bs=512 2>/dev/null
+	dd if=/dev/urandom of=/var/lib/random-seed count=1 bs=4096 2>/dev/null
 fi
 
 if [ -f /etc/crypttab ]; then

@@ -32,8 +32,22 @@
 #RPCNFSDCOUNT=8
 # Stop the nfsd module from being pre-loaded
 #NFSD_MODULE="noload"
-# Set V4 grace period in seconds
+# Set V4 and NLM grace periods in seconds
+#
+# Warning, NFSD_V4_GRACE should not be less than
+# NFSD_V4_LEASE was on the previous boot.
+#
+# To make NFSD_V4_GRACE shorter, with active v4 clients,
+# first make NFSD_V4_LEASE shorter, then restart server. 
+# This will make the clients aware of the new value. 
+# Then NFSD_V4_GRACE can be decreased with another restart. 
+#
+# When there are no active clients, changing these values 
+# can be done in a single server restart.
+#
 #NFSD_V4_GRACE=90
+#NFSD_V4_LEASE=90
+#NLM_GRACE_PERIOD=90
 #
 #
 #

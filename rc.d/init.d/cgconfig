@@ -33,6 +33,7 @@
 prefix=/usr;exec_prefix=/usr;sbindir=/sbin
 CGCONFIGPARSER_BIN=$sbindir/cgconfigparser
 CONFIG_FILE=/etc/cgconfig.conf
+CONFIG_DIR=/etc/cgconfig.d
 servicename=cgconfig
 lockfile=/var/lock/subsys/$servicename
 
@@ -117,10 +118,10 @@ start() {
                     return 6
                 fi
 
-                $CGCONFIGPARSER_BIN -l $CONFIG_FILE
+                $CGCONFIGPARSER_BIN -l $CONFIG_FILE -L $CONFIG_DIR
                 retval=$?
                 if [ $retval -ne 0 ]; then
-                    log_failure_msg "Failed to parse " $CONFIG_FILE
+                    log_failure_msg "Failed to parse " $CONFIG_FILE " or " $CONFIG_DIR
                     return 1
                 fi
         fi

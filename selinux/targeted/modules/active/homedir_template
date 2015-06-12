@@ -14,12 +14,12 @@ HOME_DIR/\.pki(/.*)?	system_u:object_r:home_cert_t:s0
 HOME_DIR/\.kde(/.*)?	system_u:object_r:config_home_t:s0
 HOME_DIR/\.uml(/.*)?	system_u:object_r:uml_rw_t:s0
 HOME_DIR/dead.letter	--	system_u:object_r:mail_home_t:s0
-HOME_DIR/\.DCOP.*	--	system_u:object_r:iceauth_home_t:s0
 HOME_DIR/\.dmrc.*	--	system_u:object_r:xdm_home_t:s0
-HOME_DIR/\.gvfs(/.*)?	<<none>>
-HOME_DIR/Music(/.*)?	system_u:object_r:audio_home_t:s0
-HOME_DIR/\.cert(/.*)?	system_u:object_r:home_cert_t:s0
+HOME_DIR/\.DCOP.*	--	system_u:object_r:iceauth_home_t:s0
 HOME_DIR/Audio(/.*)?	system_u:object_r:audio_home_t:s0
+HOME_DIR/Music(/.*)?	system_u:object_r:audio_home_t:s0
+HOME_DIR/\.gvfs(/.*)?	<<none>>
+HOME_DIR/\.cert(/.*)?	system_u:object_r:home_cert_t:s0
 HOME_DIR/\.dbus(/.*)?	system_u:object_r:dbus_home_t:s0
 HOME_DIR/\.xine(/.*)?	system_u:object_r:config_home_t:s0
 HOME_DIR/\.java(/.*)?	system_u:object_r:mozilla_home_t:s0
@@ -56,8 +56,8 @@ HOME_DIR/\.ethereal(/.*)?	system_u:object_r:ethereal_home_t:s0
 HOME_DIR/\.netscape(/.*)?	system_u:object_r:mozilla_home_t:s0
 HOME_DIR/public_git(/.*)?	system_u:object_r:git_user_content_t:s0
 HOME_DIR/\.gstreamer-.*	system_u:object_r:gstreamer_home_t:s0
-HOME_DIR/\.serverauth.*	--	system_u:object_r:xauth_home_t:s0
 HOME_DIR/\.Xauthority.*	--	system_u:object_r:xauth_home_t:s0
+HOME_DIR/\.serverauth.*	--	system_u:object_r:xauth_home_t:s0
 HOME_DIR/\.fontconfig(/.*)?	system_u:object_r:user_fonts_cache_t:s0
 HOME_DIR/\.fonts/auto(/.*)?	system_u:object_r:user_fonts_cache_t:s0
 HOME_DIR/\.macromedia(/.*)?	system_u:object_r:nsplugin_home_t:s0
@@ -65,9 +65,8 @@ HOME_DIR/\.gstreamer-.*/plugins/.*\.so.*	--	system_u:object_r:textrel_shlib_t:s0
 HOME_ROOT/lost\+found/.*	<<none>>
 HOME_DIR/\.local/share(.*)?	system_u:object_r:data_home_t:s0
 HOME_DIR/\.thunderbird(/.*)?	system_u:object_r:mozilla_home_t:s0
+HOME_DIR/\.ICEauthority.*	--	system_u:object_r:iceauth_home_t:s0
 HOME_DIR/\.fonts\.cache-.*	--	system_u:object_r:user_fonts_cache_t:s0
-HOME_DIR/\.ICEauthority.*	--	system_u:object_r:iceauth_home_t:s0
-HOME_DIR/\.ICEauthority.*	--	system_u:object_r:iceauth_home_t:s0
 HOME_DIR/\.gcjwebplugin(/.*)?	system_u:object_r:nsplugin_home_t:s0
 HOME_DIR/\.spamassassin(/.*)?	system_u:object_r:spamc_home_t:s0
 HOME_DIR/\.icedteaplugin(/.*)?	system_u:object_r:nsplugin_home_t:s0

@@ -104,7 +104,7 @@ __umount_loop() {
 			remaining=$(LC_ALL=C awk "/^#/ {next} $1" "$2" | sort -r)
 		done
 		[ -z "$remaining" ] && break
-		fstab-decode /sbin/fuser -m $remaining 2>/dev/null  | sed -e "s/\b$$\b//" | xargs kill $sig >/dev/null
+		kill $sig $(fstab-decode /sbin/fuser -m $remaining 2>/dev/null  | sed -e "s/\b$$\b//g") > /dev/null
 		sleep 3
 		retry=$(($retry -1))
 		sig=-9
@@ -148,7 +148,10 @@ __umount_loopback_loop() {
 __pids_var_run() {
 	local base=${1##*/}
 	local pid_file=${2:-/var/run/$base.pid}
+	local pid_dir=$(/usr/bin/dirname $pid_file)
 	local binary=$3
+
+	[ -d "$pid_dir" -a ! -r "$pid_dir" ] && return 4
 
 	pid=
 	if [ -f "$pid_file" ] ; then
@@ -161,7 +164,7 @@ __pids_var_run() {
 			for p in $line ; do
 				if [ -z "${p//[0-9]/}" -a -d "/proc/$p" ] ; then
 					if [ -n "$binary" ] ; then
-						local b=$(__readlink /proc/$p/exe)
+						local b=$(readlink /proc/$p/exe | sed -e 's/\s*(deleted)$//')
 						[ "$b" != "$binary" ] && continue
 					fi
 					pid="$pid $p"
